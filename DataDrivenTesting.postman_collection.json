@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "eedee1bd-ab46-4441-901a-cc1b79dc430a",
+		"name": "DataDrivenTesting",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38501681",
+		"_collection_link": "https://leap22.postman.co/workspace/ATB9x-PK~586618ec-35a0-495c-b671-670eb92d308b/collection/38501681-eedee1bd-ab46-4441-901a-cc1b79dc430a?action=share&source=collection_link&creator=38501681"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body has all keys\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.have.all.keys(\"email\",\"password\",\"id\",\"createdAt\");\r",
+							"});\r",
+							"// Check if the response time is less than 1000ms\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.lessThan(1000);\r",
+							"});\r",
+							"\r",
+							"//To verify email\r",
+							"\r",
+							"pm.test(\"To verify email\", function(){\r",
+							"    var email = pm.iterationData.get(\"email\");\r",
+							"    var response_email = pm.response.json()[\"email\"];\r",
+							"    pm.expect(email).to.be.equal(response_email);\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/register/preprod",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"register",
+						"preprod"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
